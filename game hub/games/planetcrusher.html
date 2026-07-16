@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Planet Crusher</title>
+<style>
+body {
+    background: black;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+}
+
+h1 {
+    color: cyan;
+}
+
+#planet {
+    width: 200px;
+    height: 200px;
+    background: green;
+    border-radius: 50%;
+    margin: 50px auto;
+    cursor: pointer;
+    box-shadow: 0 0 30px green;
+}
+
+#score {
+    font-size: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🌎 Planet Crusher</h1>
+
+<p>Click the planet to destroy it!</p>
+
+<div id="planet"></div>
+
+<div id="score">Damage: 0</div>
+
+<script>
+
+let damage = 0;
+let planet = document.getElementById("planet");
+let score = document.getElementById("score");
+
+planet.onclick = function(){
+
+    damage++;
+
+    score.innerHTML = "Damage: " + damage;
+
+    planet.style.transform = "scale(" + (1 - damage/200) + ")";
+
+    if(damage >= 100){
+        alert("💥 Planet Destroyed!");
+        damage = 0;
+        planet.style.transform = "scale(1)";
+        score.innerHTML = "Damage: 0";
+    }
+
+}
+
+</script>
+
+</body>
+</html>

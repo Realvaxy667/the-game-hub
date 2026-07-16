@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Planet Clicker</title>
+<style>
+body{
+    background:#000;
+    color:white;
+    text-align:center;
+    font-family:Arial;
+}
+
+#planet{
+    width:200px;
+    height:200px;
+    background:deepskyblue;
+    border-radius:50%;
+    margin:40px auto;
+    cursor:pointer;
+    box-shadow:0 0 30px deepskyblue;
+}
+
+button{
+    padding:10px 20px;
+    font-size:18px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<h1>🪐 Planet Clicker</h1>
+
+<div id="planet"></div>
+
+<h2>Points: <span id="points">0</span></h2>
+
+<button onclick="buyUpgrade()">
+Buy Upgrade (50 Points)
+</button>
+
+<h3>Power: <span id="power">1</span></h3>
+
+<script>
+let points = 0;
+let power = 1;
+
+const pointsText = document.getElementById("points");
+const powerText = document.getElementById("power");
+
+document.getElementById("planet").onclick = () => {
+    points += power;
+    pointsText.textContent = points;
+};
+
+function buyUpgrade(){
+    if(points >= 50){
+        points -= 50;
+        power++;
+        pointsText.textContent = points;
+        powerText.textContent = power;
+    }
+}
+</script>
+
+</body>
+</html>

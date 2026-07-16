@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Endless Runner</title>
+<style>
+body{
+    margin:0;
+    background:#87ceeb;
+    overflow:hidden;
+}
+canvas{
+    display:block;
+    margin:auto;
+    background:#87ceeb;
+}
+</style>
+</head>
+<body>
+
+<canvas id="game" width="800" height="400"></canvas>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+let player = {
+    x:100,
+    y:300,
+    w:40,
+    h:40,
+    vy:0,
+    jumping:false
+};
+
+let obstacles = [];
+let score = 0;
+
+document.addEventListener("keydown", e=>{
+    if((e.code==="Space" || e.key==="ArrowUp") && !player.jumping){
+        player.vy = -15;
+        player.jumping = true;
+    }
+});
+
+function spawnObstacle(){
+    obstacles.push({
+        x:800,
+        y:320,
+        w:30,
+        h:80
+    });
+}
+
+setInterval(spawnObstacle,1500);
+
+function gameLoop(){
+
+    ctx.clearRect(0,0,800,400);
+
+    ctx.fillStyle="green";
+    ctx.fillRect(0,360,800,40);
+
+    player.vy += 0.8;
+    player.y += player.vy;
+
+    if(player.y >= 300){
+        player.y = 300;
+        player.vy = 0;
+        player.jumping = false;
+    }
+
+    ctx.fillStyle="blue";
+    ctx.fillRect(player.x,player.y,player.w,player.h);
+
+    ctx.fillStyle="red";
+
+    obstacles.forEach((obs,i)=>{
+
+        obs.x -= 6;
+
+        ctx.fillRect(obs.x,obs.y,obs.w,obs.h);
+
+        if(
+            player.x < obs.x + obs.w &&
+            player.x + player.w > obs.x &&
+            player.y < obs.y + obs.h &&
+            player.y + player.h > obs.y
+        ){
+            alert("Game Over! Score: " + score);
+            location.reload();
+        }
+
+        if(obs.x < -50){
+            obstacles.splice(i,1);
+            score++;
+        }
+    });
+
+    ctx.fillStyle="black";
+    ctx.font="24px Arial";
+    ctx.fillText("Score: " + score, 10, 30);
+
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
+</script>
+
+</body>
+</html>

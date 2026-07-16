@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Aim Trainer</title>
+<style>
+body{
+    margin:0;
+    text-align:center;
+    font-family:Arial;
+    background:#111;
+    color:white;
+}
+#game{
+    position:relative;
+    width:800px;
+    height:500px;
+    margin:20px auto;
+    border:2px solid white;
+    background:#222;
+}
+.target{
+    position:absolute;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:red;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<h1>🎯 Aim Trainer</h1>
+<h2>Score: <span id="score">0</span></h2>
+
+<div id="game"></div>
+
+<script>
+let score = 0;
+const game = document.getElementById("game");
+const scoreText = document.getElementById("score");
+
+function spawnTarget(){
+
+    const target = document.createElement("div");
+    target.className = "target";
+
+    target.style.left =
+        Math.random()*750 + "px";
+
+    target.style.top =
+        Math.random()*450 + "px";
+
+    target.onclick = function(){
+        score++;
+        scoreText.textContent = score;
+        target.remove();
+    };
+
+    game.appendChild(target);
+
+    setTimeout(()=>{
+        if(target.parentNode){
+            target.remove();
+        }
+    },1500);
+}
+
+setInterval(spawnTarget,1000);
+</script>
+
+</body>
+</html>
